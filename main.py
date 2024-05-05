@@ -19,6 +19,9 @@ target_x = random.randint(0, SCREEN_WIDTH - target_width)# перемещени�
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)# перемещение мишени по высоте экрана
 color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))# изменеие цвета экрана
 
+font = pygame.font.Font(None, 36) # Отображение очков на экране
+score = 0
+
 running = True
 while running:
     screen.fill(color)
@@ -29,9 +32,14 @@ while running:
             mouse_x, mouse_y = pygame.mouse.get_pos() # коодинаты на экране нажатия мыши
             # проверка попадания клика мыши по мишени
             if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
+                score += 1
+                print("Score:", score)  # отображение очков в консоли
                 target_x = random.randint(0, SCREEN_WIDTH - target_width) #необходимость движения мишени после клика мыши
                 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
     screen.blit(target_image, (target_x, target_y)) # отрисовка мишени на экране
+    text = font.render(f"Score: {score}", True, (0, 0, 0)) # отображение очков на экране
+    screen.blit(text, (10, 10))
+
     pygame.display.update() # обновление экрана после события
 pygame.quit()
