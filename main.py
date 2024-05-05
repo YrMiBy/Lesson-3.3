@@ -21,6 +21,17 @@ color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))# �
 
 running = True
 while running:
-    pass
+    screen.fill(color)
+    for event in pygame.event.get(): # event - переменная, в которой сохраняются все события
+        if event.type == pygame.QUIT: # событие - выход из игры при нажатии крестика
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN: # событие - нажатие кнопки мыши
+            mouse_x, mouse_y = pygame.mouse.get_pos() # коодинаты на экране нажатия мыши
+            # проверка попадания клика мыши по мишени
+            if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
+                target_x = random.randint(0, SCREEN_WIDTH - target_width) #необходимость движения мишени после клика мыши
+                target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
+    screen.blit(target_image, (target_x, target_y)) # отрисовка мишени на экране
+    pygame.display.update() # обновление экрана после события
 pygame.quit()
